@@ -1,11 +1,16 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import Send from '$lib/send.svelte';
+	import download from 'downloadjs';
 	export let targetId: string;
 
-	let message = '';
 	const state = {
 		connection: undefined
+	};
+
+	const fileDetails = {
+		name: '',
+		size: 0,
+		type: ''
 	};
 
 	onMount(async () => {
@@ -20,24 +25,20 @@
 			state.connection.on('open', () => {
 				console.log('Connected to peer');
 			});
+
+			state.connection.on('data', (data) => {
+				download(data.buffer, data.name, data.type);
+				console.log('Received data');
+			});
 		});
 
 		peer.on('error', function (err) {
 			console.log(err);
 		});
 	});
-
-	const send = () => {
-		if (state.connection) {
-			state.connection.send(message);
-			console.log(`Sent message: ${message}`);
-			message = '';
-		}
-	};
 </script>
 
 <div>
 	<p>Receiver</p>
 	<p>Target: {targetId}</p>
-	<Send connection={state.connection} />
 </div>

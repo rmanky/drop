@@ -12,5 +12,5 @@
 	};
 </script>
 
-<input bind:value={message} />
+<input on:submit={send} bind:value={message} />
 <button on:click={send}>Send</button>

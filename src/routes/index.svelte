@@ -2,12 +2,15 @@
 	import { onMount } from 'svelte';
 	import QRCode from '$lib/qrcode.svelte';
 
-	let messageLog = [];
-	let windowLocation = '';
-	let selfPeerId = '';
+	const state = {
+		messageLog: [],
+		windowLocation: '',
+		selfPeerId: '',
+		connection: undefined
+	};
 
 	onMount(async () => {
-		windowLocation = window.location.href;
+		state.windowLocation = window.location.href;
 
 		const Peer = (await import('peerjs')).default;
 		const peer = new Peer({ debug: 3 });
@@ -15,7 +18,7 @@
 
 		peer.on('open', (id) => {
 			console.log(`Connected to server with ID ${id}`);
-			selfPeerId = id;
+			state.selfPeerId = id;
 		});
 
 		peer.on('error', function (err) {
@@ -24,24 +27,43 @@
 
 		peer.on('connection', (conn) => {
 			console.log(`Received connection from ${conn.peer}`);
+			state.connection = conn;
 
 			conn.on('data', (data) => {
 				console.log(`Received data: ${data}`);
-				messageLog = [...messageLog, data];
+				state.messageLog = [...state.messageLog, data];
 			});
 		});
 	});
+
+	const fileSelected = (e: Event) => {
+		const file = (e.target as HTMLInputElement).files[0];
+		if (!file) {
+			return;
+		}
+
+		file.arrayBuffer().then((buffer) => {
+			state.connection.send({
+				buffer,
+				name: file.name,
+				type: file.type
+			});
+		});
+	};
 </script>
 
 <main>
 	<h1>Drop</h1>
 
-	<p>Your ID: {selfPeerId}</p>
-	<a href={`recv/${selfPeerId}`}>Share Link</a>
+	<p>Your ID: {state.selfPeerId}</p>
+	<a href={`recv/${state.selfPeerId}`}>Share Link</a>
+	<p>Status: {state.connection ? 'Connnected' : 'Disconnected'}</p>
 
-	<QRCode id={`${windowLocation}recv/${selfPeerId}`} />
+	<QRCode id={`${state.windowLocation}recv/${state.selfPeerId}`} />
 
-	<p>{messageLog}</p>
+	{#if state.connection}
+		<input type="file" accept="*" on:change={(e) => fileSelected(e)} />
+	{/if}
 
 	<p>
 		Visit <a href="https://svelte.dev">svelte.dev</a> to learn how to build Svelte apps.

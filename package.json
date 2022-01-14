@@ -29,6 +29,7 @@
   },
   "type": "module",
   "dependencies": {
+    "downloadjs": "^1.4.7",
     "peerjs": "^1.3.2",
     "qrcode": "^1.5.0"
   }
