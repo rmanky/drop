@@ -1,5 +1,8 @@
-import adapter from '@sveltejs/adapter-auto';
+// svelte.config.js
 import preprocess from 'svelte-preprocess';
+import UnoCss from 'unocss/vite';
+import { presetAttributify, presetIcons, presetUno } from 'unocss';
+import { extractorSvelte } from '@unocss/core';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -8,10 +11,16 @@ const config = {
 	preprocess: preprocess(),
 
 	kit: {
-		adapter: adapter(),
-
 		// hydrate the <div id="svelte"> element in src/app.html
-		target: '#svelte'
+		target: '#svelte',
+		vite: {
+			plugins: [
+				UnoCss({
+					extractors: [extractorSvelte],
+					presets: [presetAttributify(), presetUno(), presetIcons()]
+				})
+			]
+		}
 	}
 };
 
