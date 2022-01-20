@@ -9,7 +9,8 @@
 	let rate;
 
 	const state = {
-		connection: undefined
+		connection: undefined,
+		chunks: []
 	};
 
 	const fileDetails = {
@@ -23,7 +24,6 @@
 		// download random file
 		const Peer = (await import('peerjs')).default;
 		const peer = new Peer({ debug: 3 });
-		const chunks = [];
 		console.log('Created new peer');
 
 		peer.on('open', (selfId) => {
@@ -41,13 +41,14 @@
 					fileDetails.size = data.size;
 					fileDetails.type = data.type;
 					fileDetails.received = 0;
+					state.chunks = [];
 					console.log(`Received file details: ${JSON.stringify(fileDetails)}`);
 				} else {
 					// if chunks is empty, start rate
-					if (chunks.length === 0) {
+					if (state.chunks.length === 0) {
 						rate.start();
 					}
-					chunks.push(data);
+					state.chunks.push(data);
 					fileDetails.received += data.byteLength;
 					console.log(`Received chunk of ${data.byteLength} bytes`);
 				}
@@ -57,7 +58,7 @@
 					// merge the chunks of ArrayBuffer
 					console.log(`Received all ${fileDetails.size} bytes`);
 					rate.stop();
-					const blob = new Blob(chunks);
+					const blob = new Blob(state.chunks);
 
 					download(blob, fileDetails.name, fileDetails.type);
 				}
