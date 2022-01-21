@@ -25,8 +25,8 @@
 	onMount(async () => {
 		state.windowLocation = window.location.host;
 
-		const Peer = (await import('peerjs')).default;
-		const peer = new Peer({ debug: 3 });
+		// const Peer = (await import('peerjs')).default;
+		const peer = new globalThis.Peer({ debug: 3 });
 		console.log('Created new peer');
 
 		peer.on('open', (id) => {

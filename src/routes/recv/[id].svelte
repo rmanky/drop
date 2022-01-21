@@ -21,9 +21,7 @@
 	};
 
 	onMount(async () => {
-		// download random file
-		const Peer = (await import('peerjs')).default;
-		const peer = new Peer({ debug: 3 });
+		const peer = new globalThis.Peer({ debug: 3 });
 		console.log('Created new peer');
 
 		peer.on('open', (selfId) => {

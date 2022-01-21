@@ -1,27 +1,63 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import QRCode from '$lib/comp/qrcode.svelte';
-  import { formatMagnet } from '$lib/util/convert';
+	import { formatMagnet } from '$lib/util/convert';
 
 	let fileSelected;
-	let infoHash;
+	let selfPeerId;
+	let client;
+	let windowLocation;
+	let torrent;
 
-	onMount(() => {
+	onMount(async () => {
+		// const Peer = (await import('peerjs')).default;
+		const peer = new globalThis.Peer({ debug: 3 });
+
 		const WebTorrent = globalThis.WebTorrent;
+		client = new WebTorrent();
 
-		var client = new WebTorrent();
+		console.log('Created new peer');
+		windowLocation = window.location.host;
 
-		fileSelected = (e) => {
-			const file = e.target.files[0];
-			client.seed(file, (torrent) => {
-    		console.log(torrent)
-				infoHash = torrent.infoHash;
-  		});
+		peer.on('open', (id) => {
+			console.log(`Connected to server with ID ${id}`);
+			selfPeerId = id;
+		});
+
+		peer.on('error', function (err) {
+			console.log(err);
+		});
+
+		peer.on('connection', (connection) => {
+			console.log(`Received connection from ${connection.peer}`);
+
+			connection.on('data', (data) => {
+				if (data === 'send nudes') {
+					connection.send({ magnet: torrent.magnetURI });
+				}
+			});
+		});
+
+		fileSelected = (e: Event) => {
+			const file = (e.target as HTMLInputElement).files[0];
+			client.seed(file, (_torrent) => {
+				torrent = _torrent;
+				console.log(torrent);
+			});
 		};
+
+		setInterval(() => (client = client), 1000);
 	});
 </script>
 
-<input type="file" accept="*" on:change={(e) => fileSelected(e)} />
-<p>MagnetURI: {formatMagnet(infoHash)}</p>
-<a href={`/recv/webtor/${infoHash}`}>Share Link</a>
-<QRCode id={infoHash ?? 'sus'}/>
+<template>
+	<a href={`/recv/webtor/${selfPeerId}`}>Share Link</a>
+	<QRCode id={`${windowLocation}/recv/webtor/${selfPeerId}`} />
+	<input type="file" accept="*" on:change={(e) => fileSelected(e)} />
+	{#if client}
+		<p>{torrent}</p>
+		<p>{client.progress}</p>
+		<p>{client.uploadSpeed}</p>
+		<p>{client.downloadSpeed}</p>
+	{/if}
+</template>
