@@ -51,25 +51,30 @@
 <template>
 	<h1>Wordle</h1>
 	<!-- create a 5x6 grid of squares -->
-	{#each matrix as row}
-		<div flex="~" gap-2 mb-2>
-			{#each row as square}
-				<div
-					on:click={() => (square = incrementSquare(square))}
-					w-20
-					h-20
-					style:background-color={square}
-				/>
-			{/each}
-		</div>
-	{/each}
+	<div container mx-auto max-w-96>
+		{#each matrix as row}
+			<div grid grid-cols-5 gap-2 mb-2>
+				{#each row as square}
+					<div
+						aspect-square
+						w-full
+						h-full
+						rounded-lg
+						on:click={() => (square = incrementSquare(square))}
+						style:background-color={square}
+					/>
+				{/each}
+			</div>
+		{/each}
+	</div>
+
 	<div flex="~" items-center gap-4>
-	<textarea bind:this={textArea} rows="6" readonly value={matrixToEmoji(matrix)}/>
-	<button bg-dark text-light p-2 h-12 rounded-lg on:click={async () => {
-		textArea.select()
-    await navigator.clipboard.writeText(textArea.value);
-	}}>
-	Copy to Clipboard
-	</button>
+		<textarea bind:this={textArea} rows="6" readonly value={matrixToEmoji(matrix)}/>
+		<button bg-dark text-light p-2 h-12 rounded-lg on:click={async () => {
+			textArea.select()
+			await navigator.clipboard.writeText(textArea.value);
+		}}>
+		Copy to Clipboard
+		</button>
 	</div>
 </template>
