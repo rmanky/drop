@@ -1,4 +1,6 @@
 <script lang="ts">
+  let textArea;
+
 	enum Color {
 		Gray = 'gray',
 		Orange = 'orange',
@@ -37,6 +39,9 @@
 			for (let j = 0; j < matrix[i].length; j++) {
 				emojiMatrix += colorToEmoji(matrix[i][j]);
 			}
+			if(matrix[i].filter(c => c === Color.Green).length === matrix[i].length) {
+				break;
+			}
 			emojiMatrix += '\n';
 		}
 		return emojiMatrix;
@@ -58,5 +63,13 @@
 			{/each}
 		</div>
 	{/each}
-	<textarea type="text" h-32>{matrixToEmoji(matrix)}</textarea>
+	<div flex="~" items-center gap-4>
+	<textarea bind:this={textArea} rows="6" readonly value={matrixToEmoji(matrix)}/>
+	<button bg-dark text-light p-2 h-12 rounded-lg on:click={async () => {
+		textArea.select()
+    await navigator.clipboard.writeText(textArea.value);
+	}}>
+	Copy to Clipboard
+	</button>
+	</div>
 </template>
