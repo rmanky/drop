@@ -4,6 +4,8 @@
 	import download from 'downloadjs';
 	import TransferRate from '$lib/comp/rate.svelte';
 	import { formatBytes } from '$lib/util/convert';
+	import { title } from '$lib/stores.ts';
+  title.set('Receive');
 
 	let targetId = $page.params.id;
 	let rate;
@@ -72,7 +74,6 @@
 </script>
 
 <div>
-	<p>Receiver</p>
 	<p>Target: {targetId}</p>
 	<p>File Name: {fileDetails.name}</p>
 	<p>File Size: {formatBytes(fileDetails.size)}</p>

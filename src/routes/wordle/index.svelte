@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { title } from '$lib/stores.ts';
+  title.set('Wordle');
   let textArea;
 
 	enum Color {
@@ -49,7 +51,6 @@
 </script>
 
 <template>
-	<h1>Wordle</h1>
 	<!-- create a 5x6 grid of squares -->
 	<div container mx-auto max-w-96>
 		{#each matrix as row}
