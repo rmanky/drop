@@ -3,6 +3,8 @@
 	import QRCode from '$lib/comp/qrcode.svelte';
 	import TransferRate from '$lib/comp/rate.svelte';
 	import { formatBytes } from '$lib/util/convert';
+	import { title } from '$lib/stores.ts';
+  title.set('Drop');
 
 	const chunkSizeOptions = [1024 * 10, 1024 * 100, 1024 * 1024, 1024 * 1024 * 5, 1024 * 1024 * 25];
 
@@ -95,27 +97,28 @@
 	};
 </script>
 
-<main>
-	<h1>Drop</h1>
+<div flex="~" flex-col items-center gap-8>
+	<div flex="~" flex-col items-center gap-2 bg-blue-600 px-4 pt-4 pb-2  rounded-xl>
+		<QRCode id={`${state.windowLocation}/recv/${state.selfPeerId}`} />
+		<p>Or, share <a href={`recv/${state.selfPeerId}`} underline="~">this link</a></p>
+	</div>
 
-	<p>Your ID: {state.selfPeerId}</p>
-	<a href={`recv/${state.selfPeerId}`} text="blue-600" underline="~">Share Link</a>
-	<p>Status: {state.connection ? 'Connnected' : 'Disconnected'}</p>
+	<div flex="~" flex-col items-center gap-2>
+		<input disabled={!state.connection} type="file" accept="*" on:change={(e) => fileSelected(e)} />
+		<progress w-full h-6 value={fileDetails.sent} max={fileDetails.size} /> 
+	</div>
 
-	<!-- chunk size selector -->
-	<label for="chunkSize">Chunk Size:</label>
-	<select id="chunkSize" bind:value={state.chunkSize}>
-		{#each chunkSizeOptions as chunkSize}
-			<option value={chunkSize}>{formatBytes(chunkSize)}</option>
-		{/each}
-	</select>
-
-	<QRCode id={`${state.windowLocation}/recv/${state.selfPeerId}`} />
-
-	{#if state.connection}
-		<input type="file" accept="*" on:change={(e) => fileSelected(e)} />
-		<progress value={fileDetails.sent} max={fileDetails.size} />
-	{/if}
-
-	<TransferRate bind:this={rate} sent={fileDetails.sent} />
-</main>
+	<div flex="~" flex-col bg-dark-400 p-4 rounded-xl>
+		<p>Status: {state.connection ? 'Connnected' : 'Disconnected'}</p>
+		<!-- chunk size selector -->
+		<div>
+			<label for="chunkSize">Chunk Size:</label>
+			<select bg-dark-600 text-light-200 id="chunkSize" bind:value={state.chunkSize}>
+				{#each chunkSizeOptions as chunkSize}
+					<option value={chunkSize}>{formatBytes(chunkSize)}</option>
+				{/each}
+			</select>
+		</div>
+		<TransferRate bind:this={rate} sent={fileDetails.sent} />
+	</div>	
+</div>

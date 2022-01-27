@@ -19,10 +19,7 @@ const config = {
 			plugins: [
 				UnoCss({
 					extractors: [extractorSvelte],
-					presets: [presetAttributify(), presetUno(), presetIcons()],
-					shortcuts: {
-						dark: 'bg-dark-400 text-light-200'
-					}
+					presets: [presetAttributify(), presetUno(), presetIcons()]
 				})
 			]
 		}
