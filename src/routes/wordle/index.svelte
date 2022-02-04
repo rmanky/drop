@@ -5,11 +5,11 @@
 
 	enum Color {
 		Gray = 'gray',
-		Orange = 'orange',
+		Yellow = 'yellow',
 		Green = 'green'
 	}
 
-	const Colors = [Color.Gray, Color.Orange, Color.Green];
+	const Colors = [Color.Gray, Color.Yellow, Color.Green];
 	// create a 5x6 matrix
 	let matrix = new Array(6);
 	for (let i = 0; i < matrix.length; i++) {
@@ -28,8 +28,8 @@
 		switch (color) {
 			case Color.Gray:
 				return '⬛';
-			case Color.Orange:
-				return '🟧';
+			case Color.Yellow:
+				return '🟨';
 			case Color.Green:
 				return '🟩';
 		}
@@ -40,9 +40,6 @@
 		for (let i = 0; i < matrix.length; i++) {
 			for (let j = 0; j < matrix[i].length; j++) {
 				emojiMatrix += colorToEmoji(matrix[i][j]);
-			}
-			if(matrix[i].filter(c => c === Color.Green).length === matrix[i].length) {
-				break;
 			}
 			emojiMatrix += '\n';
 		}
