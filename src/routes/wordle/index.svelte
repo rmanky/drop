@@ -66,13 +66,19 @@
 		{/each}
 	</div>
 
-	<div flex="~" items-center gap-4>
+	<div mt-4 flex flex-col justify-center items-center gap-4>
 		<textarea bind:this={textArea} rows="6" readonly value={matrixToEmoji(matrix)}/>
-		<button bg-dark text-light p-2 h-12 rounded-lg on:click={async () => {
+		<div flex gap-4>
+		<button bg-green-600 text-light p-2 rounded-lg
+		on:click={async () => {
 			textArea.select()
 			await navigator.clipboard.writeText(textArea.value);
 		}}>
 		Copy to Clipboard
 		</button>
+		<a bg-blue-600 text-light p-2 rounded-lg href="/">Back Home</a>
+		</div>
 	</div>
+
+	
 </template>

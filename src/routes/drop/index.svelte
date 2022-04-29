@@ -99,7 +99,11 @@
 
 <div flex="~" flex-col items-center gap-8>
 	<div flex="~" flex-col items-center gap-2 bg-blue-600 px-4 pt-4 pb-2  rounded-xl>
+		{#if state.selfPeerId}
 		<QRCode id={`${state.windowLocation}/recv/${state.selfPeerId}`} />
+		{:else} 
+		<div bg-white w-180px h-180px/>
+		{/if}
 		<p>Or, share <a href={`recv/${state.selfPeerId}`} underline="~">this link</a></p>
 	</div>
 
@@ -121,4 +125,5 @@
 		</div>
 		<TransferRate bind:this={rate} sent={fileDetails.sent} />
 	</div>	
+	<a bg-blue-600 p-2 rounded text-4 href="/">Back Home</a>
 </div>

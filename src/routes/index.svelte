@@ -15,7 +15,7 @@
 
 
 <template>
-  <div w-full h-full flex items-center justify-center font-mono>
+  <div h-full flex items-center justify-center font-mono>
     <div>
       <h1 text-24 text-middle>rmanky</h1>
       <div flex flex-col gap-2 text-6 justify-start>
