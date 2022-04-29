@@ -14,7 +14,7 @@
 		padding: 24px;
 	}
 
-	:global(html, body, main) {
+	:global(html, body, #svelte, main) {
 		height: 100%
 	}
 </style>
