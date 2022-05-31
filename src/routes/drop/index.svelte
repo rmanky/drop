@@ -3,8 +3,6 @@
 	import QRCode from '$lib/comp/qrcode.svelte';
 	import TransferRate from '$lib/comp/rate.svelte';
 	import { formatBytes } from '$lib/util/convert';
-	import { title } from '$lib/stores.ts';
-  title.set('Drop');
 
 	const chunkSizeOptions = [1024 * 10, 1024 * 100, 1024 * 1024, 1024 * 1024 * 5, 1024 * 1024 * 25];
 
@@ -97,19 +95,23 @@
 	};
 </script>
 
+<svelte:head>
+	<title>Drop</title>
+</svelte:head>
+
 <div flex="~" flex-col items-center gap-8>
-	<div flex="~" flex-col items-center gap-2 bg-blue-600 px-4 pt-4 pb-2  rounded-xl>
+	<div flex="~" flex-col items-center gap-2 bg-blue-600 px-4 pt-4 pb-2 rounded-xl>
 		{#if state.selfPeerId}
-		<QRCode id={`${state.windowLocation}/recv/${state.selfPeerId}`} />
-		{:else} 
-		<div bg-white w-180px h-180px/>
+			<QRCode id={`${state.windowLocation}/recv/${state.selfPeerId}`} />
+		{:else}
+			<div bg-white w-180px h-180px />
 		{/if}
 		<p>Or, share <a href={`recv/${state.selfPeerId}`} underline="~">this link</a></p>
 	</div>
 
 	<div flex="~" flex-col items-center gap-2>
 		<input disabled={!state.connection} type="file" accept="*" on:change={(e) => fileSelected(e)} />
-		<progress w-full h-6 value={fileDetails.sent} max={fileDetails.size} /> 
+		<progress w-full h-6 value={fileDetails.sent} max={fileDetails.size} />
 	</div>
 
 	<div flex="~" flex-col bg-dark-400 p-4 rounded-xl>
@@ -124,6 +126,6 @@
 			</select>
 		</div>
 		<TransferRate bind:this={rate} sent={fileDetails.sent} />
-	</div>	
+	</div>
 	<a bg-blue-600 p-2 rounded text-4 href="/">Back Home</a>
 </div>

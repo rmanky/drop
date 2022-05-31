@@ -1,25 +1,24 @@
 <script lang="ts">
 	import { formatBytes } from '$lib/util/convert';
-	export let sent: number = 0;
-	let time: number = 0;
+	export let sent = 0;
+	let time = 0;
 	let interval: NodeJS.Timer;
 	let startTime: number = Date.now();
+	let started = false;
 
-	let started: boolean = false;
-
-	export function start() {
+	export const start = (): void => {
 		startTime = Date.now();
 		started = true;
 		// update time every second
 		interval = setInterval(() => {
 			time = (Date.now() - startTime) / 1000;
 		}, 100);
-	}
+	};
 
-	export function stop() {
+	export const stop = (): void => {
 		clearInterval(interval);
 		started = false;
-	}
+	};
 </script>
 
 <template>

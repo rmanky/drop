@@ -3,7 +3,7 @@
 	import '@unocss/reset/tailwind.css';
 </script>
 
-<main>
+<main h-auto min-h-full flex items-center justify-center align-end font-mono pb-6>
 	<slot />
 </main>
 
@@ -14,7 +14,7 @@
 		padding: 24px;
 	}
 
-	:global(html, body, #svelte, main) {
-		height: 100%
+	:global(html, body, main) {
+		height: 100%;
 	}
 </style>

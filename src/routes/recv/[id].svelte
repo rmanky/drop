@@ -4,8 +4,6 @@
 	import download from 'downloadjs';
 	import TransferRate from '$lib/comp/rate.svelte';
 	import { formatBytes } from '$lib/util/convert';
-	import { title } from '$lib/stores.ts';
-  title.set('Receive');
 
 	let targetId = $page.params.id;
 	let rate;
@@ -72,6 +70,10 @@
 		});
 	});
 </script>
+
+<svelte:head>
+	<title>Receive</title>
+</svelte:head>
 
 <div>
 	<p>Target: {targetId}</p>

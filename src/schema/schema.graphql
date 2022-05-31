@@ -1,0 +1,16 @@
+type User {
+	name: String!
+	email: String!
+	status: Status!
+}
+
+type Query {
+	allUsers: [User]
+}
+
+enum Status {
+	PENDING
+	YES
+	NO
+	MAYBE
+}

@@ -12,10 +12,11 @@ const config = {
 	preprocess: preprocess(),
 
 	kit: {
-		// hydrate the <div id="svelte"> element in src/app.html
 		adapter: vercel(),
-		target: '#svelte',
 		vite: {
+			optimizeDeps: {
+				exclude: ['@urql/svelte']
+			},
 			plugins: [
 				UnoCss({
 					extractors: [extractorSvelte],
