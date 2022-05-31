@@ -37,7 +37,7 @@
 		},
 		{
 			icon: 'i-carbon-time',
-			text: '06:00 PM - 10:00 PM'
+			text: '02:00 PM - 08:00 PM'
 		},
 		{
 			icon: 'i-carbon-phone',
@@ -47,9 +47,9 @@
 
 	const confirms = [
 		{
-			text: 'No',
-			color: '#BB2222',
-			status: 'NO'
+			text: 'Yes',
+			color: '#118833',
+			status: 'YES'
 		},
 		{
 			text: 'Maybe',
@@ -57,9 +57,9 @@
 			status: 'MAYBE'
 		},
 		{
-			text: 'Yes',
-			color: '#118833',
-			status: 'YES'
+			text: 'No',
+			color: '#BB2222',
+			status: 'NO'
 		}
 	];
 </script>
