@@ -90,7 +90,7 @@
 			{:else}
 				{@const user = $users.data?.partialUpdateUser}
 				<div flex justify-between p-4 bg-light-400 text-dark-800 font-bold>
-					<p>Secure Access Card</p>
+					<p>Identification Card</p>
 					<div text-2xl class="i-carbon-identification" />
 				</div>
 				<ul p-4 flex flex-col gap-2>
