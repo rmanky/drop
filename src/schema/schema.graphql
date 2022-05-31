@@ -1,6 +1,6 @@
 type User {
 	name: String!
-	email: String!
+	phone: String!
 	status: Status!
 }
 

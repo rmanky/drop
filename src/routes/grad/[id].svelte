@@ -12,7 +12,7 @@
 				partialUpdateUser(id: $id, data: { status: $status }) {
 					name
 					status
-					email
+					phone
 				}
 			}
 		`,
@@ -41,7 +41,7 @@
 		},
 		{
 			icon: 'i-carbon-phone',
-			text: '774-777-1034'
+			text: '(774) 777-1034'
 		}
 	];
 
@@ -103,9 +103,9 @@
 						{/if}
 					</li>
 					<li flex items-center gap-4 pb-2 border-b-2 border-dark-200>
-						<div text-2xl class="i-carbon-email" />
-						{#if user?.email}
-							{user.email}
+						<div text-2xl class="i-carbon-phone" />
+						{#if user?.phone}
+							{user.phone}
 						{:else}
 							<div w="1/2" h="1.5em" rounded-md animate-pulse bg-dark-200 />
 						{/if}
