@@ -65,7 +65,17 @@
 </script>
 
 <svelte:head>
-	<title>{$users.data?.partialUpdateUser?.name ?? 'Graduation'}</title>
+	<title>Graduation Party</title>
+	<meta property="og:title" content="Graduation Party" />
+	<meta property="og:description" content="Graduation party invite for Robear Mankaryous" />
+	<meta property="og:image" content="https://rmanky.com/grad.png" />
+	<meta property="og:url" content="https://rmanky.com/grad/{$page.params.id}" />
+	<meta property="og:type" content="website" />
+	<meta property="twitter:card" content="summary_large_image" />
+	<meta property="twitter:title" content="Graduation Party" />
+	<meta property="twitter:description" content="Graduation party invite for Robear Mankaryous" />
+	<meta property="twitter:image" content="https://rmanky.com/grad.png" />
+	<meta property="twitter:url" content="https://rmanky.com/grad/{$page.params.id}" />
 </svelte:head>
 
 <template>
