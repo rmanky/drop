@@ -12,26 +12,3 @@ export default createClient({
 		};
 	}
 });
-
-export const details = [
-	{
-		icon: 'i-fluent-hat-graduation-24-regular',
-		text: 'Robear Mankaryous'
-	},
-	{
-		icon: 'i-carbon-home',
-		text: '25 Highland View Dr, Sutton MA'
-	},
-	{
-		icon: 'i-carbon-calendar',
-		text: 'Saturday, 06/18/2022'
-	},
-	{
-		icon: 'i-carbon-time',
-		text: '02:00 PM - 08:00 PM'
-	},
-	{
-		icon: 'i-carbon-phone',
-		text: '(774) 777-1034'
-	}
-];
