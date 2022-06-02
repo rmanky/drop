@@ -118,16 +118,16 @@
 							bind:value={phone}
 						/>
 					</label>
-					<input
+					<button
 						p-2
 						disabled={!name || !phone}
 						style:opacity={!name || !phone ? '0.2' : '1.0'}
-						class="!bg-blue-800 {name && phone ? 'hover:!bg-blue-600' : ''}"
+						bg-blue-800
 						text-light-200
 						rounded-md
-						hover:cursor-pointer
-						type="submit"
-					/>
+					>
+						Sign Up
+					</button>
 				</div>
 			</form>
 		</div>
