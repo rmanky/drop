@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { gql, setContextClient } from '@urql/svelte';
 	import client from '$lib/client';
+	import { details } from '$lib/client';
 	setContextClient(client);
 
 	let error = '';
@@ -49,6 +50,17 @@
 
 <template>
 	<div flex flex-col gap-6>
+		<h1 leading-12 text-12>Graduation Party</h1>
+		<div>
+			<ul flex flex-col gap-2>
+				{#each details as detail}
+					<li flex items-center gap-4 pb-2 border-b-2 border-dark-600>
+						<div text-2xl class={detail.icon} />
+						{detail.text}
+					</li>
+				{/each}
+			</ul>
+		</div>
 		<div flex-shrink bg-dark-600 rounded-2 overflow-hidden>
 			<div flex justify-between gap-8 p-4 bg-light-400 text-dark-800 font-bold>
 				<p>Sign Up Below</p>
