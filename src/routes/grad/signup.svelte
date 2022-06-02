@@ -32,17 +32,20 @@
 
 	const signUp = (name: string, phone: string) => {
 		// convert phone number to form (XXX) XXX-XXXX
-		const phoneNumber = phone.replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
-
+		// count the number of digits in the phone number
 		if (name.length < 3) {
 			error = 'Name must be at least 3 characters long';
 			return;
 		}
 
-		if (phoneNumber.length != 10) {
+		const phoneDigits = phone.replace(/\D/g, '').length;
+
+		if (phoneDigits != 10) {
 			error = 'Phone number must be exactly 10 digits long';
 			return;
 		}
+
+		const phoneNumber = phone.replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
 
 		client
 			.mutation(
