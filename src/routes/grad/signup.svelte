@@ -39,8 +39,8 @@
 			return;
 		}
 
-		if (phoneNumber.length < 10) {
-			error = 'Phone number must be at least 10 digits long';
+		if (phoneNumber.length != 10) {
+			error = 'Phone number must be exactly 10 digits long';
 			return;
 		}
 
